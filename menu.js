@@ -434,6 +434,49 @@ function geriSatiri(hedef) {
   return buton;
 }
 
+const paletler = [
+  { id: "pembe", ad: "Pembe" },
+  { id: "kahve", ad: "Kahve" },
+  { id: "yesil", ad: "Yeşil" }
+];
+
+const temaRenk = {
+  pembe: "#e2b4bd",
+  kahve: "#c4a484",
+  yesil: "#6d9a58"
+};
+
+function paletUygula(id) {
+  const secili = paletler.some((palet) => palet.id === id) ? id : "pembe";
+  if (secili === "pembe") document.documentElement.removeAttribute("data-palet");
+  else document.documentElement.dataset.palet = secili;
+  try { localStorage.setItem("kahveciniz-palet", secili); } catch (e) {}
+  const tema = document.querySelector('meta[name="theme-color"]');
+  if (tema) tema.setAttribute("content", temaRenk[secili]);
+}
+
+function paletSatiri() {
+  const kutu = el("div", "paletler");
+  const guncel = document.documentElement.dataset.palet || "pembe";
+  paletler.forEach((palet) => {
+    const buton = el("button", palet.id === guncel ? "palet secili" : "palet");
+    buton.type = "button";
+    buton.dataset.palet = palet.id;
+    buton.setAttribute("aria-pressed", palet.id === guncel ? "true" : "false");
+    buton.append(el("span", "palet-nokta"), document.createTextNode(palet.ad));
+    buton.addEventListener("click", () => {
+      paletUygula(palet.id);
+      [...kutu.children].forEach((dugme) => {
+        const bu = dugme.dataset.palet === palet.id;
+        dugme.classList.toggle("secili", bu);
+        dugme.setAttribute("aria-pressed", bu ? "true" : "false");
+      });
+    });
+    kutu.append(buton);
+  });
+  return kutu;
+}
+
 function menuSheet(kutu) {
   bilgi.setAttribute("aria-label", "Menü");
   bilgi.removeAttribute("aria-labelledby");
@@ -443,7 +486,7 @@ function menuSheet(kutu) {
     menuSatiri("İstek ve şikayetler", () => sheetAc(sikayetSheet, menuButonu)),
     menuSatiri("Bizi takip et", () => sheetAc(takipSheet, menuButonu))
   );
-  kutu.append(liste);
+  kutu.append(el("p", "palet-baslik", "Renk"), paletSatiri(), liste);
 }
 
 function oySheet(kutu) {
@@ -561,6 +604,7 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && !perde.hidden) sheetKapat();
 });
 
+paletUygula(document.documentElement.dataset.palet || "pembe");
 cizVitrin();
 cizKategoriler();
 doldurListe();

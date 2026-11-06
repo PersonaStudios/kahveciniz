@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#e2b4bd">
   <title>Kahveciniz</title>
+  <script>
+    try {
+      var palet = localStorage.getItem("kahveciniz-palet");
+      if (palet === "kahve" || palet === "yesil") document.documentElement.dataset.palet = palet;
+    } catch (e) {}
+  </script>
   <link rel="stylesheet" href="gorunum.css">
 </head>
 <body>
