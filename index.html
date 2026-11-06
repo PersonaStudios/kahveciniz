@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#e2b4bd">
+  <title>Kahveciniz</title>
+  <link rel="stylesheet" href="gorunum.css">
+</head>
+<body>
+  <header class="ust">
+    <h1>Kahveciniz</h1>
+    <button type="button" class="menu-buton" id="menu-buton" aria-label="Menü" aria-expanded="false">
+      <img src="assets/menu.svg" alt="" width="14" height="8">
+    </button>
+  </header>
+
+  <main>
+    <section class="vitrin" aria-roledescription="carousel" aria-label="Öne çıkanlar">
+      <h2>Öne Çıkanlar</h2>
+      <div class="vitrin-pencere" id="vitrin"></div>
+      <div class="gez">
+        <img src="assets/arrows.svg" alt="" width="118" height="25">
+        <button type="button" class="gez-ok geri" id="onceki" aria-label="Önceki öne çıkan"></button>
+        <div class="noktalar" id="noktalar"></div>
+        <button type="button" class="gez-ok ileri" id="sonraki" aria-label="Sonraki öne çıkan"></button>
+      </div>
+    </section>
+
+    <div class="kategoriler" id="kategoriler" role="tablist" aria-label="Kategoriler"></div>
+    <section class="liste" id="liste" aria-live="polite"></section>
+  </main>
+
+  <div class="perde" id="perde" hidden>
+    <div class="bilgi" id="bilgi" role="dialog" aria-modal="true">
+      <div id="bilgi-ic"></div>
+      <button type="button" class="kapat" id="kapat">Kapat</button>
+    </div>
+  </div>
+
+  <script src="menu.js"></script>
+</body>
+</html>
